@@ -8,6 +8,8 @@ from django.urls import reverse_lazy
 from django.contrib.auth.views import LoginView
 from django.contrib.auth import logout as logouts
 
+from django.contrib.auth.mixins import LoginRequiredMixin
+
 from .models import Task
 #from django.http import HttpResponse ->we don't need this for class based views
 
@@ -26,21 +28,21 @@ def logout(request):
         logouts(request)
         return redirect('login')
 
-class TaskList(ListView):
+class TaskList(LoginRequiredMixin, ListView):
     model = Task
     context_object_name = 'tasks'
 
-class TaskDetail(DetailView):
+class TaskDetail(LoginRequiredMixin, DetailView):
     model = Task
     context_object_name = 'task'
     template_name = 'base/task.html'
 
-class TaskCreate(CreateView):
+class TaskCreate(LoginRequiredMixin, CreateView):
     model = Task
     fields = '__all__'
     success_url = reverse_lazy('tasks')
 
-class TaskUpdate(UpdateView):
+class TaskUpdate(LoginRequiredMixin, UpdateView):
     model = Task
     fields = '__all__'
     success_url = reverse_lazy('tasks')
