@@ -1,11 +1,12 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 #for redirection
 
-from django.contrib.auth.views import LoginView, logout_then_login, LogoutView
+from django.contrib.auth.views import LoginView
+from django.contrib.auth import logout as logouts
 
 from .models import Task
 #from django.http import HttpResponse ->we don't need this for class based views
@@ -19,6 +20,11 @@ class CustomLoginView(LoginView):
 
     def get_success_url(self):
         return reverse_lazy('tasks')
+
+def logout(request):
+    if request.method=='GET':
+        logouts(request)
+        return redirect('login')
 
 class TaskList(ListView):
     model = Task
