@@ -8,6 +8,11 @@
 <h1>My To Do List</h1>
 <a href="{% url 'task-create' %}">Add Task</a>
 
+<form method="GET">
+    <input type="text" name="search-area" value="{{search_area}}">
+    <input type="submit" value="Search">
+</form>
+
 <table>
     <tr>
         <th> Item</th>
@@ -15,7 +20,7 @@
         <th></th>
         <th></th>
     </tr>
-    {% for task in object_list %}
+    {% for task in tasks %}
     <tr>
         <td>{{task.title}}</td>
         <td><a href="{% url 'task' task.id %}">View</a></td>
