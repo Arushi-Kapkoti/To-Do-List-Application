@@ -2,16 +2,27 @@
 
 {% block content %}
 
-<h1>Register</h1>
+<div class="header-bar">
+    <h1>Register</h1>
+</div>
 
-<form method="POST">
-    {% csrf_token %}
-    {{form.as_p}} 
-    <!-- to render django form as paragraph -->
-    <input type = 'submit' value="Register"/>
-</form>
-<!-- johnuser1 -->
+<div class="card-body">
+    <form method="POST">
+        {% csrf_token %}
+        <!-- {{form.as_p}}  -->
+        <!-- to render django form as paragraph -->
+        <label>{{form.username.label}}</label>
+        {{form.username}}
 
-<p>Already have an account?<a href="{% url 'login' %}">Login</a></p>
+        <label>{{form.password1.label}}</label>
+        {{form.password1}}
+
+        <label>{{form.password2.label}}</label>
+        {{form.password2}}
+
+        <input class="button" style="margin-left: 0px;" type = 'submit' value="Register"/>
+    </form>
+    <p>Already have an account? <a href="{% url 'login' %}">Login</a></p>
+</div>
 
 {% endblock content %}
